@@ -1,22 +1,25 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HwHub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
-
     <style>
+        body {
+            background-color: #1D1E22;
+            font-family: "Lato", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
         .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-        }
-        
-        body {
-            background-color: #1D1E22;
-             font-family: "Lato", sans-serif;
         }
         
         .pdf {
@@ -47,7 +50,6 @@
             font-size: 18px;
             color: white;
             text-align: center;
-        
         }
         
         h1 {
@@ -55,7 +57,7 @@
             text-align: center;
             color: white;
             font-family: 'Great Vibes', cursive;
-        
+            margin: 20px 0;
         }
         
         h2 {
@@ -63,226 +65,222 @@
             text-align: center;
             color: white;
             font-family: 'Great Vibes', cursive;
-        
+            margin: 10px 0;
         }
         
         p {
             font-size: 16px;
             text-align: center;
             color: white;
-            font-family: 'arial';
-        
+            font-family: 'Arial', sans-serif;
         }
         
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #1D1E22;
-  padding: 20px;
-  box-shadow: 0 0 25px rgba(255, 256, 255);
-  opacity: 0;
-  animation: bounce-in 0.5s;
-  animation-fill-mode: forwards;
-  border-radius: 10px; /* Adjust the border radius as desired */
-  max-height: 80%; /* Adjust the maximum height as desired */
-  overflow: auto;
-}
-@keyframes bounce-in {
-  0% {
-    transform: translate(-50%, -200%);
-    opacity: 0;
-  }
-  70% {
-    transform: translate(-50%, -30%);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
-}
-/* Style the close button */
-.close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 50px;
-  color: #fff; /* Set the initial color to white */
-  cursor: pointer;
-  font-family: 'arial';
-  z-index: 1;
-}
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #1D1E22;
+            padding: 20px;
+            box-shadow: 0 0 25px rgba(255, 256, 255, 0.5);
+            opacity: 0;
+            animation: bounce-in 0.5s;
+            animation-fill-mode: forwards;
+            border-radius: 10px;
+            max-height: 80%;
+            overflow: auto;
+        }
+        
+        @keyframes bounce-in {
+            0% {
+                transform: translate(-50%, -200%);
+                opacity: 0;
+            }
+            70% {
+                transform: translate(-50%, -30%);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+            }
+        }
+        
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 50px;
+            color: #fff;
+            cursor: pointer;
+            font-family: 'Arial', sans-serif;
+            z-index: 1;
+        }
+        
+        .close:hover {
+            color: #888;
+        }
+        
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+        
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+        
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+        
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        
+        .openbtn {
+            font-size: 20px;
+            cursor: pointer;
+            color: black;
+            padding: 10px 15px;
+            border: none;
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            background-color: #fff;
+        }
+        
+        .openbtn:hover {
+            background-color: #333;
+            color: white;
+        }
+        
+        #content {
+            transition: margin-left 0.5s;
+            padding: 16px;
+        }
+        
+        @media screen and (max-height: 450px) {
+            .sidebar {
+                padding-top: 15px;
+            }
+            .sidebar a {
+                font-size: 18px;
+            }
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+            color: #fff;
+            cursor: pointer;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: black transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+        }
 
-.close:hover {
-  color: #888; /* Set the color to grey on hovering */
-}
-
-         .sidebar {
-              height: 100%;
-              width: 0;
-              position: fixed;
-              z-index: 1;
-              top: 0;
-              left: 0;
-              background-color: #111;
-              overflow-x: hidden;
-              transition: 0.5s;
-              padding-top: 60px;
-           }
-        
-           .sidebar a {
-              padding: 8px 8px 8px 32px;
-              text-decoration: none;
-              font-size: 25px;
-              color: #818181;
-              display: block;
-              transition: 0.3s;
-           }
-        
-           .sidebar a:hover {
-              color: #f1f1f1;
-           }
-        
-           .sidebar .closebtn {
-              position: absolute;
-              top: 0;
-              right: 25px;
-              font-size: 36px;
-              margin-left: 50px;
-           }
-        
-           .openbtn {
-              font-size: 20px;
-              cursor: pointer;
-              color: black;
-              padding: 10px 15px;
-              border: none;
-               position: absolute;
-                top: 8px;
-                 left: 16px;
-               font-size: 18px;
-                background-color: #fff;
-           }
-        
-           .openbtn:hover {
-              background-color: #333;
-           }
-        
-           #content {
-              transition: margin-left 0.5s;
-              padding: 16px;
-           }
-        
-           /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-        
-           @media screen and (max-height: 450px) {
-              .sidebar {
-         padding-top: 15px;
-              }
-              .sidebar a {
-         font-size: 18px;
-              }
-           }
-           .tooltip {
-  position: relative; /* Changed to relative positioning */
-  display: inline-block;
-  border-bottom: 1px dotted black;
-  color: #fff;
-  bottom: 8px;
-  left: 6px;
-  cursor: pointer;
-}
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 100%; /* Changed to align with the bottom of the tooltip container */
-  left: 50%;
-  transform: translateX(-50%); /* Added to center the tooltip horizontally */
-}
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
+        .current-subject {
+            font-size: 22px;
+            text-align: center;
+            color: #Fff;
+            font-family: 'Playfair Display';
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
-    <h1 style="color:white">
-        <center>HwHub</center>
-    </h1>
+    <h1>NoteHub</h1>
+    <div class="current-subject">Currently viewing all subjects, view other subjects using Sort by</div>
     <div class="container">
-<div class="pdf" onclick="window.open('pdfs/file1.pdf')">
+        <div class="pdf" onclick="window.open('pdfs/file1.pdf')">
             <i class="fas fa-file-pdf pdf-icon"></i>
             <div class="pdf-name">1/10/2023 HW</div>
         </div>
     </div>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="hide()">×</a>
-         <a href="#">Today</a>
-        <a href="W.html">Last Week</a>
-        <a href="M.html">Last Month</a>
-        <a href="WD.html">Weekend HW</a>
-         <a href="Holiday.html">Holiday HW</a>
+        <a href="#">Everything</a>
+        <a href="Sci.html">Science</a>
+        <a href="Eng.html">English</a>
+        <a href="maths.html">Maths</a>
+        <a href="Social.html">Social</a>
     </div>
     <div id="content">
         <button class="openbtn" id="openbtn" onclick="show()">☰ Sort By</button>
     </div>
-   
     <script src="https://kit.fontawesome.com/9e0761fa1a.js" crossorigin="anonymous"></script>
-   <script>
-  // Function to display the popup
-  function displayPopup() {
-    // Create the popup element
-    var popup = document.createElement('div');
-    popup.className = 'popup';
-    // Add the popup content
-    popup.innerHTML = '<h2 >Welcome!</h2><p style="color:white">Welcome, dear users! We are thrilled to unveil our new identity as Hwhub, a dedicated space for free homework assistance. Formerly Notehub, our transformation reflects a renewed commitment to helping you excel academically. Embrace the change with us and get ready for an enhanced experience of quality and free homework support. Welcome to HWhub!<div class="tooltip"><b>ⒾVersion </b><span class="tooltiptext"><b>0.9.7</b><i>(Updates are going on in process..)</i></span></div></p>';
-    // Create the close button
-    var closeButton = document.createElement('span');
-    closeButton.className = 'close';
-    closeButton.innerHTML = '&times;'; // Insert an "X" symbol
-    closeButton.addEventListener('click', function () {
-      popup.parentNode.removeChild(popup); // Remove the popup when the close button is clicked
-    });
-    // Append the close button to the popup
-    popup.appendChild(closeButton);
-    // Append the popup to the body element
-    document.body.appendChild(popup);
-    // Add a class to trigger the animation
-    popup.classList.add('show');
-  }
-  // Call the displayPopup function when the page is loaded
-  window.addEventListener('load', displayPopup);
-</script>
     <script>
+        function displayPopup() {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = '<h2>Welcome!</h2><p style="color:white">Welcome, dear users! We are thrilled to unveil our new identity as Hwhub, a dedicated space for free homework assistance. Formerly Notehub, our transformation reflects a renewed commitment to helping you excel academically. Embrace the change with us and get ready for an enhanced experience of quality and free homework support. Welcome to HWhub!<div class="tooltip"><b>ⒾVersion </b><span class="tooltiptext"><b>0.9.7</b><i>(Updates are going on in process..)</i></span></div></p>';
+            var closeButton = document.createElement('span');
+            closeButton.className = 'close';
+            closeButton.innerHTML = '&times;';
+            closeButton.addEventListener('click', function () {
+                popup.parentNode.removeChild(popup);
+            });
+            popup.appendChild(closeButton);
+            document.body.appendChild(popup);
+            popup.classList.add('show');
+        }
+
+        window.addEventListener('load', displayPopup);
+
         function show() {
-           document.getElementById("mySidebar").style.width = "250px";
-           document.getElementById("content").style.marginLeft = "250px";
+            document.getElementById("mySidebar").style.width = "250px";
+            document.getElementById("content").style.marginLeft = "250px";
         }
         
         function hide() {
-           document.getElementById("mySidebar").style.width = "0";
-           document.getElementById("content").style.marginLeft = "0";
+            document.getElementById("mySidebar").style.width = "0";
+            document.getElementById("content").style.marginLeft = "0";
         }
     </script>
 </body>
 </html>
-
-  
