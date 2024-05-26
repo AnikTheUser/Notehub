@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HwHub</title>
+    <title>NoteHub</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
             justify-content: center;
         }
         
-        .pdf {
+        .pdf, .motivation-button {
             margin: 10px;
             width: 150px;
             height: 150px;
@@ -36,17 +36,17 @@
             cursor: pointer;
         }
         
-        .pdf:hover {
+        .pdf:hover, .motivation-button:hover {
             background-color: black;
         }
         
-        .pdf-icon {
+        .pdf-icon, .motivation-icon {
             font-size: 48px;
             color: #008CBA;
             margin-bottom: 10px;
         }
         
-        .pdf-name {
+        .pdf-name, .motivation-text {
             font-size: 18px;
             color: white;
             text-align: center;
@@ -241,6 +241,10 @@
             <i class="fas fa-file-pdf pdf-icon"></i>
             <div class="pdf-name">1/10/2023 HW</div>
         </div>
+        <div class="motivation-button" onclick="displayMotivation()">
+            <i class="fas fa-lightbulb motivation-icon"></i>
+            <div class="motivation-text">Get Motivation</div>
+        </div>
     </div>
     <div id="mySidebar" class="sidebar">
         <a href="javascript:void(0)" class="closebtn" onclick="hide()">×</a>
@@ -251,29 +255,55 @@
         <a href="Social.html">Social</a>
         <a href="Hindi.html">Hindi</a>
         <a href="P.html">Our Partners!</a>
-
     </div>
     <div id="content">
         <button class="openbtn" id="openbtn" onclick="show()">☰ Sort By</button>
     </div>
     <script src="https://kit.fontawesome.com/9e0761fa1a.js" crossorigin="anonymous"></script>
     <script>
-        function displayPopup() {
-            var popup = document.createElement('div');
-            popup.className = 'popup';
-            popup.innerHTML = '<h2>Welcome!</h2><p style="color:white">Welcome, dear users! We are thrilled to unveil our new identity as Hwhub, a dedicated space for free homework assistance. Formerly Notehub, our transformation reflects a renewed commitment to helping you excel academically. Embrace the change with us and get ready for an enhanced experience of quality and free homework support. Welcome to HWhub!<div class="tooltip"><b>ⒾVersion </b><span class="tooltiptext"><b>0.9.7</b><i>(Updates are going on in process..)</i></span></div></p>';
+        const motivations = [
+            "Realize that education is more than just the memorization of facts; it's the cornerstone of empowerment. With each page turned and concept understood, you're not just absorbing information; you're equipping yourself with the tools needed to thrive in a complex and ever-evolving world. Embrace the journey of learning as a means to take control of your destiny, to shape your future according to your aspirations, and to empower yourself to make informed decisions that impact not only your own life but also the lives of those around you.",
+            "Visualize your dreams as destinations on a map, and education as the roadmap guiding you towards them. Each subject studied, each skill acquired, brings you one step closer to realizing those dreams. Whether it's the dream of a fulfilling career, financial stability, or personal fulfillment, know that every moment spent studying is an investment in turning those dreams into tangible realities. Let your aspirations be the fuel that drives you forward, propelling you through the challenges and obstacles that may lie ahead.",
+            "Reflect on the profound impact that education has on your personal growth journey. Every book read, every lesson learned, is an opportunity for self-discovery and self-improvement. Embrace the process of learning as a means to expand your horizons, broaden your perspectives, and discover new facets of yourself. Through education, you not only acquire knowledge but also develop critical thinking skills, resilience, and a deeper understanding of the world around you, all of which contribute to your ongoing growth and development as an individual.",
+            "Envision education as the key that unlocks a multitude of doors of opportunity. With each new skill mastered, each qualification earned, you broaden your range of possibilities and open yourself up to a world of opportunities. Whether it's pursuing higher education, advancing in your career, or exploring new avenues, know that the knowledge you gain through studying has the power to transform your life trajectory and lead you down paths you may have never imagined possible",
+            "Contemplate the transformative impact that education can have on both individuals and society as a whole. By dedicating yourself to your studies, you equip yourself with the knowledge and skills needed to address pressing issues, contribute to positive change, and make a meaningful difference in the world. Whether it's through research, advocacy, or community service, recognize that your commitment to learning has the potential to ripple outwards, inspiring others to join you in creating a better, more equitable future for all.",
+            "Embrace the belief that each individual possesses untapped potential waiting to be unleashed. Through diligent study and perseverance, you have the power to unlock your true capabilities and fulfill the boundless potential within you. Whether it's mastering a challenging subject, overcoming obstacles, or achieving personal goals, know that every step you take on your educational journey brings you closer to realizing your full potential and living a life of purpose and fulfillment.",
+            "Reflect on the confidence that comes from mastery and expertise. With each new concept understood and every challenge overcome, your confidence grows, propelling you toward greater achievements. Embrace the learning process as an opportunity to push beyond your comfort zone, to confront your fears and doubts, and to emerge stronger and more resilient. As you accumulate knowledge and skills, trust in your ability to navigate life's complexities with confidence and conviction, knowing that you are capable of overcoming any obstacle that comes your way.",
+            "Recognize the pivotal role that education plays in securing a stable and prosperous future. In an increasingly competitive global economy, the knowledge and skills you acquire through studying are invaluable assets that can open doors to exciting career opportunities, financial stability, and personal fulfillment. By investing in your education now, you lay the groundwork for a future filled with endless possibilities, ensuring that you are well-equipped to adapt to the challenges and opportunities that lie ahead.",
+            "Consider the ripple effect of your dedication to learning on those around you. As you pursue your studies with passion and determination, you serve as an inspiration to others, demonstrating the transformative power of education and the impact it can have on individuals and communities. Whether it's classmates, friends, or family members, know that your commitment to learning has the potential to spark curiosity, ignite passions, and inspire others to embark on their own educational journeys, thereby creating a ripple effect of positive change and growth",
+            "Ultimately, view studying as a means to live a life filled with purpose and meaning. Embrace each study session as an opportunity to align your actions with your aspirations, to cultivate a deeper understanding of yourself and the world around you, and to contribute to something greater than yourself. Whether it's pursuing knowledge for its own sake, striving for personal excellence, or making a positive impact on the lives of others, let your educational journey be guided by a sense of purpose and a commitment to lifelong learning."
+	 ];
+
+        function displayPopup(title, content) {
+            var popup = document.querySelector('.popup');
+            if (!popup) {
+                popup = document.createElement('div');
+                popup.className = 'popup';
+                document.body.appendChild(popup);
+            }
+            popup.innerHTML = '<h2>' + title + '</h2><p style="color:white">' + content + '</p>';
             var closeButton = document.createElement('span');
             closeButton.className = 'close';
             closeButton.innerHTML = '&times;';
             closeButton.addEventListener('click', function () {
-                popup.parentNode.removeChild(popup);
+                popup.style.opacity = '0';
+                setTimeout(() => { popup.remove(); }, 500);
             });
             popup.appendChild(closeButton);
-            document.body.appendChild(popup);
-            popup.classList.add('show');
+            popup.style.opacity = '0';
+            popup.style.display = 'block';
+            setTimeout(() => { popup.style.opacity = '1'; }, 0);
         }
 
-        window.addEventListener('load', displayPopup);
+        function displayMotivation() {
+            const randomIndex = Math.floor(Math.random() * motivations.length);
+            const randomMotivation = motivations[randomIndex];
+            displayPopup("Motivation", randomMotivation);
+        }
+
+        window.addEventListener('load', () => {
+            displayPopup("Welcome", "Welcome, dear users! We are thrilled to unveil our new identity as Hwhub, a dedicated space for free homework assistance. Formerly Notehub, our transformation reflects a renewed commitment to helping you excel academically. Embrace the change with us and get ready for an enhanced experience of quality and free homework support. Welcome to HWhub!<div class='tooltip'><b>ⒾVersion </b><span class='tooltiptext'><b>0.9.7</b><i>(Updates are going on in process..)</i></span></div>");
+        });
 
         function show() {
             document.getElementById("mySidebar").style.width = "250px";
